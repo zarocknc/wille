@@ -10,8 +10,10 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     const session = await getServerSession(req, res, options)
 
     if (!session) {
-        res.status(401).json({ message: "You must be logged in." });
-        return;
+        return NextResponse.json({
+            status: "error",
+            messsage: "no eres admin",
+        }, { status: 401 })
     }
     if (session.user.role === "ADMIN") {
         try {
@@ -23,7 +25,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
                         status: "success",
                         message: "se a agregado una imagen",
                         fileKey: fileKey,
-                    }, {status: 200})
+                    }, { status: 200 })
                 }
             }
         } catch (error: any) {
