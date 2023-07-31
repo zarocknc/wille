@@ -1,3 +1,5 @@
+import LoginButton from "./LoginButton"
+
 
 export default function NavBar() {
   return (
@@ -51,8 +53,7 @@ export default function NavBar() {
             </ul>
           </div>
           <div className="navbar-end">
-            <a className="btn btn-primary hidden sm:flex">Contactenos</a>
-            <a href="#" className="sm:hidden ">Contacto</a>
+            <LoginButton />
           </div>
 
         </div>

@@ -7,6 +7,10 @@ export default function Home() {
       <h1>Hola esta es la pagina principal</h1>
       <p>Estas Logueado? </p>
       <LoginButton />
+
+
+      <a href="/admin/agregarproducto" className='btn btn-secondary'>agregar producto</a>
+
       
     </main>
   )
