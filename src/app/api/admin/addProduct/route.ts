@@ -3,35 +3,45 @@ import { getServerSession } from "next-auth";
 import { options } from "../../auth/[...nextauth]/options";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
+import addImage from "@/lib/MinIO/addImage";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getServerSession(req, res, options)
 
-  if (!session) {
-    res.status(401).json({ message: "You must be logged in." });
-    return;
-  }
-  if (session.user.role === "ADMIN") {
-    try {
-        
-    } catch (error: any) {
-        return new NextResponse(
-            JSON.stringify({
-                status: "error",
-                message: error.message,
-            }), {status: 500}
-        )
-        
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+    const session = await getServerSession(req, res, options)
+
+    if (!session) {
+        res.status(401).json({ message: "You must be logged in." });
+        return;
     }
-    return res.json({
-        message: "es admin"
-    })
-  }
+    if (session.user.role === "ADMIN") {
+        try {
+            let imagen: File = req.body.imagen;
+            if (imagen) {
+                const fileKey = await addImage("imagendepruba", imagen)
+                if (fileKey) {
+                    return NextResponse.json({
+                        status: "success",
+                        message: "se a agregado una imagen",
+                        fileKey: fileKey
+                    }, {status: 200})
+                }
+            }
+        } catch (error: any) {
+            return new NextResponse(
+                JSON.stringify({
+                    status: "error",
+                    message: error.message,
+                }), { status: 500 }
+            )
 
-  return NextResponse.json({
-    status: "error",
-    messsage: "no eres admin",
-}, {status: 401})
+        }
+        return res.json({
+            message: "es admin"
+        })
+    }
 
-  
+    return NextResponse.json({
+        status: "error",
+        messsage: "no eres admin",
+    }, { status: 401 })
 }
