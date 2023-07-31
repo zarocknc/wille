@@ -22,7 +22,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
                     return NextResponse.json({
                         status: "success",
                         message: "se a agregado una imagen",
-                        fileKey: fileKey
+                        fileKey: fileKey,
                     }, {status: 200})
                 }
             }
