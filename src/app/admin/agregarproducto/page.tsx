@@ -17,10 +17,10 @@ export default function AgregarProducto() {
         formState: { errors },
     } = useForm<Inputs>()
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+
     const [imagen, setImagen] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
-    const [uploadUrl, setUploadUrl] = useState(null);
+    const [uploadUrl, setUploadUrl] = useState<string | null>(null);
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
         if (event.target.files && event.target.files.length > 0) {
@@ -28,6 +28,27 @@ export default function AgregarProducto() {
         }
 
     };
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        console.log(data)
+        if (data.image && data.title && imagen) {
+            console.log("enviando al servidor");
+            setUploading(true);
+            const formData = new FormData();
+            formData.append('imagen', imagen);
+            try {
+                const response = await fetch('/api/admin/addProduct', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await response.json();
+                setUploadUrl(data.fileKey);
+                setUploading(false);
+            } catch (error) {
+                alert(`Error al subir imagen ${error}`);
+                setUploading(false);
+            }
+        }
+    }
     // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     //     e.preventDefault();
     //     if (!imagen ) return;
