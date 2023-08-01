@@ -1,31 +1,22 @@
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { options } from "../../auth/[...nextauth]/options";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 import addImage from "@/lib/MinIO/addImage";
-import { headers } from "next/headers";
 
-interface AddProductRequest extends NextApiRequest {
-  body: {
-    imagen: File
-    title: string
-  };
-}
-
-
-export async function POST(req: AddProductRequest, res: Response) {
+export const POST = async (req: Request, res: Response) => {
     const session = await getServerSession(options)
-    if (!session) {
-         return NextResponse.json({
-             status: "no estas logueado",
-         }, { status: 200 })
-    }
-    if (session.user.role === "ADMIN") {
+    // if (!session) {
+    //      return NextResponse.json({
+    //          status: "no estas logueado",
+    //      }, { status: 200 })
+    // }
+    // if (session.user.role === "ADMIN") {
+    if (true) {
         try {
-            let imagen: File = req.body.imagen;
-            if (imagen) {
-                const fileKey = await addImage("imagendeprueba", imagen)
+            const { title, imagen } = await req.json();
+            if (imagen instanceof File && typeof title === "string") {
+                const fileKey = await addImage(title, imagen)
                 if (fileKey) {
                     return NextResponse.json({
                         status: "success",
@@ -46,11 +37,11 @@ export async function POST(req: AddProductRequest, res: Response) {
         return NextResponse.json({
             status: "error",
             message: "errorsito"
-        },{status: 200})
+        }, { status: 200 })
     }
 
-    return NextResponse.json({
-        status: "error",
-        messsage: "no eres admin",
-    }, { status: 200 })
+    // return NextResponse.json({
+    //     status: "error",
+    //     messsage: "no eres admin",
+    // }, { status: 200 })
 }

@@ -35,6 +35,7 @@ export default function AgregarProducto() {
             setUploading(true);
             const formData = new FormData();
             formData.append('imagen', imagen);
+            formData.append('title', data.title);
             try {
                 const response = await fetch('/api/admin/addProduct', {
                     method: 'POST',
