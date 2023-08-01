@@ -4,6 +4,13 @@ import { options } from "../../auth/[...nextauth]/options";
 import { NextResponse } from "next/server";
 import addImage from "@/lib/MinIO/addImage";
 
+interface RequestBody {
+  imagen: File; // Replace 'string' with the appropriate type for your 'imagen' property.
+  title: string;
+  // Other properties if present in the 'req.body' object.
+}
+
+
 export const POST = async (req: Request, res: Response) => {
     const session = await getServerSession(options)
     // if (!session) {
@@ -14,18 +21,19 @@ export const POST = async (req: Request, res: Response) => {
     // if (session.user.role === "ADMIN") {
     try {
         //const { title, imagen } = await req.json();
-        const data = await req.json();
-        console.log(data)
-        console.log(`se ha recivido title en el servidor: ${data.title}`)
-        const fileKey = await addImage(data.title, data.imagen)
-        console.log(`este es el fileKey: ${fileKey}`)
-        if (fileKey) {
-            return NextResponse.json({
-                status: "success",
-                message: "se a agregado una imagen",
-                fileKey: fileKey,
-            }, { status: 200 })
-        }
+        //const data = await req.json();
+        const data = req.json();
+        console.log(data);
+        //console.log(`se ha recivido title en el servidor: ${data.title}`)
+        //const fileKey = await addImage(data.title, data.imagen)
+        //console.log(`este es el fileKey: ${fileKey}`)
+        // if (fileKey) {
+        //     return NextResponse.json({
+        //         status: "success",
+        //         message: "se a agregado una imagen",
+        //         fileKey: fileKey,
+        //     }, { status: 200 })
+        // }
     } catch (error: any) {
         console.log(error)
         return new NextResponse(
