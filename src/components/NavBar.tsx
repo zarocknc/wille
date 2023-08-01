@@ -19,6 +19,8 @@ export default function NavBar() {
                 className="inline-block"
                 src="/assets/LogoPointer.png"
                 alt="logo pointer erp"
+                height={64}
+                width={128}
               /></a
             >
           </div>
