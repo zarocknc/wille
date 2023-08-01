@@ -12,33 +12,32 @@ export const POST = async (req: Request, res: Response) => {
     //      }, { status: 200 })
     // }
     // if (session.user.role === "ADMIN") {
-    if (true) {
-        try {
-            const { title, imagen } = await req.json();
-            if (imagen instanceof File && typeof title === "string") {
-                const fileKey = await addImage(title, imagen)
-                if (fileKey) {
-                    return NextResponse.json({
-                        status: "success",
-                        message: "se a agregado una imagen",
-                        fileKey: fileKey,
-                    }, { status: 200 })
-                }
-            }
-        } catch (error: any) {
-            return new NextResponse(
-                JSON.stringify({
-                    status: "error",
-                    message: error.message
-                }), { status: 200 }
-            )
-
+    try {
+        const { title, imagen } = await req.json();
+        console.log(`se ha recivido title en el servidor: ${title}`)
+        const fileKey = await addImage(title, imagen)
+        console.log(`este es el fileKey: ${fileKey}`)
+        if (fileKey) {
+            return NextResponse.json({
+                status: "success",
+                message: "se a agregado una imagen",
+                fileKey: fileKey,
+            }, { status: 200 })
         }
-        return NextResponse.json({
-            status: "error",
-            message: "errorsito"
-        }, { status: 200 })
+    } catch (error: any) {
+        console.log(error)
+        return new NextResponse(
+            JSON.stringify({
+                status: "error",
+                message: error.message
+            }), { status: 200 }
+        )
+
     }
+    return NextResponse.json({
+        status: "error",
+        message: "errorsito"
+    }, { status: 200 })
 
     // return NextResponse.json({
     //     status: "error",
