@@ -22,7 +22,7 @@ export const POST = async (req: Request, res: Response) => {
     try {
         //const { title, imagen } = await req.json();
         //const data = await req.json();
-        const data = req.json();
+        const data = await req.json();
         console.log(data);
         //console.log(`se ha recivido title en el servidor: ${data.title}`)
         //const fileKey = await addImage(data.title, data.imagen)
