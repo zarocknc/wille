@@ -17,7 +17,7 @@ export default function NavBar() {
             <a className="btn btn-ghost normal-case text-xl"
             ><img
                 className="inline-block"
-                src="/pointerHeaderLogo.png"
+                src="/assets/LogoPointer.png"
                 alt="logo pointer erp"
               /></a
             >
