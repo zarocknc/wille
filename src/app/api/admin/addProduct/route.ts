@@ -4,11 +4,18 @@ import { options } from "../../auth/[...nextauth]/options";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 import addImage from "@/lib/MinIO/addImage";
+import { headers } from "next/headers";
+
+interface AddProductRequest extends NextApiRequest {
+  body: {
+    imagen: File
+    title: string
+  };
+}
 
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, options)
-
+export async function POST(req: AddProductRequest, res: Response) {
+    const session = await getServerSession(options)
     if (!session) {
          return NextResponse.json({
              status: "no estas logueado",
@@ -18,7 +25,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
         try {
             let imagen: File = req.body.imagen;
             if (imagen) {
-                const fileKey = await addImage("imagendepruba", imagen)
+                const fileKey = await addImage("imagendeprueba", imagen)
                 if (fileKey) {
                     return NextResponse.json({
                         status: "success",
@@ -36,9 +43,10 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
             )
 
         }
-        return res.json({
-            message: "es admin"
-        })
+        return NextResponse.json({
+            status: "error",
+            message: "errorsito"
+        },{status: 200})
     }
 
     return NextResponse.json({
