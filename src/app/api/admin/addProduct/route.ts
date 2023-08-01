@@ -13,9 +13,11 @@ export const POST = async (req: Request, res: Response) => {
     // }
     // if (session.user.role === "ADMIN") {
     try {
-        const { title, imagen } = await req.json();
-        console.log(`se ha recivido title en el servidor: ${title}`)
-        const fileKey = await addImage(title, imagen)
+        //const { title, imagen } = await req.json();
+        const data = await req.json();
+        console.log(data)
+        console.log(`se ha recivido title en el servidor: ${data.title}`)
+        const fileKey = await addImage(data.title, data.imagen)
         console.log(`este es el fileKey: ${fileKey}`)
         if (fileKey) {
             return NextResponse.json({
