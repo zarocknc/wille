@@ -10,10 +10,9 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     const session = await getServerSession(req, res, options)
 
     if (!session) {
-        return NextResponse.json({
-            status: "error",
-            messsage: "no eres admin",
-        }, { status: 401 })
+         return NextResponse.json({
+             status: "no estas logueado",
+         }, { status: 200 })
     }
     if (session.user.role === "ADMIN") {
         try {
@@ -32,8 +31,8 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
             return new NextResponse(
                 JSON.stringify({
                     status: "error",
-                    message: error.message,
-                }), { status: 500 }
+                    message: error.message
+                }), { status: 200 }
             )
 
         }
@@ -45,5 +44,5 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     return NextResponse.json({
         status: "error",
         messsage: "no eres admin",
-    }, { status: 401 })
+    }, { status: 200 })
 }

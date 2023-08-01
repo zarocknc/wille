@@ -41,6 +41,7 @@ export default function AgregarProducto() {
                     body: formData,
                 });
                 const data = await response.json();
+                console.log(data)
                 setUploadUrl(data.fileKey);
                 setUploading(false);
             } catch (error) {
