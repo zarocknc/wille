@@ -25,6 +25,7 @@ export const POST = async (req: Request, res: Response) => {
         const data = await req.formData();
         console.log(data);
         //console.log(`se ha recivido title en el servidor: ${data.title}`)
+        console.log(data.get("title"))
         //const fileKey = await addImage(data.title, data.imagen)
         //console.log(`este es el fileKey: ${fileKey}`)
         // if (fileKey) {
