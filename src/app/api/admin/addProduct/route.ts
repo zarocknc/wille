@@ -5,9 +5,9 @@ import { NextResponse } from "next/server";
 import addImage from "@/lib/MinIO/addImage";
 
 interface RequestBody {
-  imagen: File; // Replace 'string' with the appropriate type for your 'imagen' property.
-  title: string;
-  // Other properties if present in the 'req.body' object.
+    imagen: File; // Replace 'string' with the appropriate type for your 'imagen' property.
+    title: string;
+    // Other properties if present in the 'req.body' object.
 }
 
 
@@ -20,21 +20,21 @@ export const POST = async (req: Request, res: Response) => {
     // }
     // if (session.user.role === "ADMIN") {
     try {
-        //const { title, imagen } = await req.json();
-        //const data = await req.json();
         const data = await req.formData();
         console.log(data);
-        //console.log(`se ha recivido title en el servidor: ${data.title}`)
-        console.log(data.get("title"))
-        //const fileKey = await addImage(data.title, data.imagen)
-        //console.log(`este es el fileKey: ${fileKey}`)
-        // if (fileKey) {
-        //     return NextResponse.json({
-        //         status: "success",
-        //         message: "se a agregado una imagen",
-        //         fileKey: fileKey,
-        //     }, { status: 200 })
-        // }
+        const title: string = data.get("title") as string;
+        const imagen: File = data.get("imagen") as File
+        console.log(title);
+        const fileKey = await addImage(title, imagen)
+        console.log(`este es el fileKey: ${fileKey}`)
+        if (fileKey) {
+            console.log("Enviando respuesta success")
+            return NextResponse.json({
+                status: "success",
+                message: "se a agregado una imagen",
+                fileKey: fileKey,
+            }, { status: 200 })
+        }
     } catch (error: any) {
         console.log(error)
         return new NextResponse(
