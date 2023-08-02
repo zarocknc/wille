@@ -5,16 +5,17 @@ export default async function addImage(title: String, image: File): Promise<stri
         endPoint: 'http://127.0.0.1:9000/',
         port: 9000,
         useSSL: false, //TODO: activar en produccion (extremadamente vulnerable en false)
-        accessKey: '1FYGNMwEPhJ20a2AeV68',
-        secretKey: 'xCWu4NLD0IlDKQZpuLX7j9SJHccEw6beXyydbaJi'
+        accessKey: 'efe54wMLqjgr0Kq6k3gA',
+        secretKey: 'C4bSiQFQgYqrwWjYwqe4vDprdGwPmfF8jgEmxbF1'
     });
     if (image) {
     const imageName = image.name;
     const fileKey: string = `images/${Date.now()}_${imageName}`;
     const bytes = await image.arrayBuffer();
     const imgBuffer = Buffer.from(bytes);
-    minioClient.putObject('centrocomputo', fileKey, imgBuffer, function (error, objInfo) {
+    minioClient.putObject('productos', fileKey, imgBuffer, function (error, objInfo) {
             if (error) {
+                console.log(error);
                 return error;
             }
             console.log("EXITO", objInfo);
