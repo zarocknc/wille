@@ -6,7 +6,6 @@ import { Icon } from '@iconify/react';
 
 export default function Component() {
     const { data: session} = useSession()
-    console.log(session)
 
   if (session) {
     return (

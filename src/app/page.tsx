@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import LoginButton from "@/components/LoginButton";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -9,7 +10,8 @@ export default function Home() {
       <LoginButton />
 
 
-      <a href="/admin/agregarproducto" className='btn btn-secondary'>agregar producto</a>
+      <Link href='/admin/agregarproducto' className='btn btn-secondary'>agregar producto</Link>
+      <Link href='/admin/verproducto' className='btn btn-secondary'>ver productos</Link>
 
       
     </main>
