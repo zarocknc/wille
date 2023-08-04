@@ -19,7 +19,7 @@ export default function NavBar() {
             </div>
             <Link href="/" className="btn btn-ghost normal-case text-xl"
             ><img
-                className="inline-block"
+                className="inline-block max-w-fit	"
                 src="/assets/LogoPointer.png"
                 alt="logo pointer erp"
                 height={64}
